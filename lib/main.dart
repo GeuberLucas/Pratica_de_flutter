@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,11 +26,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  double percent = 0.75;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.count(
-        crossAxisCount: 1,
+      body: Column(
         children: <Widget>[
           //profile area
           const Icon(
@@ -247,25 +248,46 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           //Graphics area
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(top: 8.0),
-              itemCount: 4,
-              itemBuilder: ((context, index) {
-                return Card(
-                  shape: const RoundedRectangleBorder(),
-                  child: Column(
-                    children: [
-                      Stack(children: const [
-                        CircularProgressIndicator(),
-                        Text("75%")
-                      ]),
-                      const Text("sport"),
-                      const Text("2 tasks for today"),
-                    ],
+          Card(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(22))),
+            color: Colors.amber,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: CircularPercentIndicator(
+                    radius: 40.0,
+                    lineWidth: 5.0,
+                    animation: true,
+                    percent: percent,
+                    reverse: true,
+                    center: Text(
+                      "${percent * 100}%",
+                      style: const TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                    backgroundColor: Colors.amberAccent,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    progressColor: Colors.white,
                   ),
-                );
-              }),
+                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 75)),
+                const Text("Sport",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white)),
+                const Text("2 task for today",
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white))
+              ],
             ),
           )
         ],
